@@ -12,6 +12,7 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.TreeSet;
 
 /**
  * Created by Danya on 24.02.2016.
@@ -22,23 +23,8 @@ public class Loader {
     private SimpleDateFormat visitDateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
 
     private HashMap<Integer, WorkTime> voteStationWorkTimes = new HashMap<>();
+    private TreeSet<String> dateVisit = new TreeSet<>();
 
-    public Loader() throws Exception {
-
-//        String fileName = "../../res/data-0.2M.xml";
-//        File file = new File(fileName);
-//        System.out.println(file.exists());
-//        System.out.println(file.getAbsolutePath());
-//        if (file.exists())
-//            parseFile(fileName);
-
-        //Printing results
-        System.out.println("Voting station work times: ");
-//            for (Integer votingStation : voteStationWorkTimes.keySet()) {
-//                WorkTime workTime = voteStationWorkTimes.get(votingStation);
-//                System.out.println("\t" + votingStation + " - " + workTime);
-//            }
-    }
 
     public void parseFile(File file) throws Exception
     {
@@ -61,6 +47,8 @@ public class Loader {
 
             Integer station = Integer.parseInt(attributes.getNamedItem("station").getNodeValue());
             Date time = visitDateFormat.parse(attributes.getNamedItem("time").getNodeValue());
+            addDate(time);
+
             WorkTime workTime = voteStationWorkTimes.get(station);
             if(workTime == null)
             {
@@ -69,6 +57,16 @@ public class Loader {
             }
             workTime.addVisitTime(time.getTime());
         }
+    }
+
+    private void addDate(Date time) {
+        SimpleDateFormat format = new SimpleDateFormat("dd MMMM yyyy");
+        String date = format.format(time);
+        dateVisit.add(date);
+    }
+
+    public TreeSet<String> getDateVisit() {
+        return dateVisit;
     }
 
     public HashMap<Integer, WorkTime> getVoteStationWorkTimes() {

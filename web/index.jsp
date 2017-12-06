@@ -2,6 +2,7 @@
 <%@ page import="pkg.WorkTime" %>
 <%@ page import="java.util.HashMap" %>
 <%@ page import="java.io.File" %>
+<%@ page import="java.util.TreeSet" %>
 
 <%
     Loader loader = new Loader();
@@ -27,8 +28,17 @@
     <title>Page test JSP</title>
 </head>
 <body>
+
+%>
 <%
+    TreeSet<String> dates = loader.getDateVisit();
     HashMap<Integer, WorkTime> voteStationWorkTimes = loader.getVoteStationWorkTimes();
+    if (!dates.isEmpty() && !voteStationWorkTimes.isEmpty()) { %>
+<table>
+    <tr></tr>
+    <%
+    for (String)
+    }
     for (Integer votingStation : voteStationWorkTimes.keySet()) {
         WorkTime workTime = voteStationWorkTimes.get(votingStation);
         //System.out.println("\t" + votingStation + " - " + workTime);
