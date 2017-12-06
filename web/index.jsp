@@ -35,14 +35,24 @@
     HashMap<Integer, WorkTime> voteStationWorkTimes = loader.getVoteStationWorkTimes();
     if (!dates.isEmpty() && !voteStationWorkTimes.isEmpty()) { %>
 <table>
-    <tr></tr>
-    <%
-    for (String)
+    <tr>
+        <%
+    for (String dateVisit: dates) {
+        System.out.println(dateVisit);
+        out.write("<th>" + dateVisit + "</th>");
+    }
+        %>
+    </tr>
+</table>
+
+<%
     }
     for (Integer votingStation : voteStationWorkTimes.keySet()) {
         WorkTime workTime = voteStationWorkTimes.get(votingStation);
         //System.out.println("\t" + votingStation + " - " + workTime);
-        %><%=votingStation%> - <%=workTime%><br><%
+        out.write(votingStation + "-" + workTime + "<br>");
+
+
     }
 %>
 </body>
