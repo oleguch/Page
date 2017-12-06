@@ -3,6 +3,7 @@
 <%@ page import="java.util.HashMap" %>
 <%@ page import="java.io.File" %>
 <%@ page import="java.util.TreeSet" %>
+<%@ page import="pkg.TimePeriod" %>
 
 <%
     Loader loader = new Loader();
@@ -29,31 +30,44 @@
 </head>
 <body>
 
-%>
 <%
     TreeSet<String> dates = loader.getDateVisit();
     HashMap<Integer, WorkTime> voteStationWorkTimes = loader.getVoteStationWorkTimes();
     if (!dates.isEmpty() && !voteStationWorkTimes.isEmpty()) { %>
 <table>
     <tr>
+        <th></th>
         <%
     for (String dateVisit: dates) {
-        System.out.println(dateVisit);
         out.write("<th>" + dateVisit + "</th>");
     }
         %>
     </tr>
-</table>
+    <%
+        for (Integer votingStation : voteStationWorkTimes.keySet()) {
+            WorkTime workTime = voteStationWorkTimes.get(votingStation);
+            out.write("<tr>");
+            out.write("<td>" + votingStation + "</td>");
+            for (String dateVisit : dates) {
+                out.write("<td>");
+                for (TimePeriod workingTime : workTime.getPeriods()) {
+                    if (workingTime.getDateVisit().equals(dateVisit)) {
+                        out.write(workingTime.getTimeVisit());
+                        continue;
+                    }
+                }
+                out.write("</td>");
+            }
+            out.write("</tr>");
+            //System.out.println("\t" + votingStation + " - " + workTime);
+            //out.write(votingStation + "-" + workTime + "<br>");
 
-<%
     }
-    for (Integer votingStation : voteStationWorkTimes.keySet()) {
-        WorkTime workTime = voteStationWorkTimes.get(votingStation);
-        //System.out.println("\t" + votingStation + " - " + workTime);
-        out.write(votingStation + "-" + workTime + "<br>");
+
 
 
     }
 %>
+</table>
 </body>
 </html>

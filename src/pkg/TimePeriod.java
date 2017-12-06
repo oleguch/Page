@@ -57,6 +57,16 @@ public class TimePeriod implements Comparable<TimePeriod>
         String to = timeFormat.format(this.to);
         return from + "-" + to;
     }
+    public String getTimeVisit(){
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+        String timeFrom = timeFormat.format(from);
+        String timeTo = timeFormat.format(to);
+        return timeFrom + "-" + timeTo;
+    }
+    public String getDateVisit() {
+        SimpleDateFormat format = new SimpleDateFormat("dd MMMM yyyy");
+        return format.format(to);
+    }
 
     @Override
     public int compareTo(TimePeriod period)
