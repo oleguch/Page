@@ -19,8 +19,13 @@
     File file = new File(getServletContext().getRealPath("/"),"../../../res/data-0.2M.xml");
     System.out.println(file.exists());
     System.out.println(file.getAbsolutePath());
-    if (file.exists())
-        loader.parseFile(file);
+    if (file.exists()) {
+        try {
+            loader.parseFile(file);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -37,13 +42,13 @@
 <table>
     <tr>
         <th></th>
-        <%
+            <%
     for (String dateVisit: dates) {
         out.write("<th>" + dateVisit + "</th>");
     }
-        %>
-    </tr>
-    <%
+
+    out.write("</tr>");
+
         for (Integer votingStation : voteStationWorkTimes.keySet()) {
             WorkTime workTime = voteStationWorkTimes.get(votingStation);
             out.write("<tr>");
@@ -59,13 +64,7 @@
                 out.write("</td>");
             }
             out.write("</tr>");
-            //System.out.println("\t" + votingStation + " - " + workTime);
-            //out.write(votingStation + "-" + workTime + "<br>");
-
-    }
-
-
-
+        }
     }
 %>
 </table>
